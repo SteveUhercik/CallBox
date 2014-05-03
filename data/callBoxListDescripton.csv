@@ -1,0 +1,8 @@
+﻿Sloupec;Název;Význam
+1;číslo VTA;Číslo veřejného telefonního automatu
+2;kraj;Kraj, ve kterém je veřejný telefonní automat umístěn
+3;okres;Okres, ve kterém je veřejný telefonní automat umístěn
+4;obec;Obec, ve které je veřejný telefonní automat umístěn
+5;část obce;Část obce, ve které je veřejný telefonní automat umístěn
+6;ulice;Ulice, ve které je veřejný telefonní automat umístěn
+7;upřesnění umístění;Poznámka k upřesnění umístění veřejného telefonního automatu, např. že se nachází u zastávky MHD, nebo u kašny
