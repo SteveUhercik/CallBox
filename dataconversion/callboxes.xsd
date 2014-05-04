@@ -1,0 +1,36 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.0" elementFormDefault="qualified">
+    <xsd:element name="callboxes" type="callboxesType">
+        <!--  vtaid je unikatni  -->
+        <xsd:unique name="unique-vtaid">
+            <xsd:selector xpath=".//*"/>
+            <xsd:field xpath="@vtaid"/>
+        </xsd:unique>
+    </xsd:element>
+<!--  callboxesType definuje root  -->
+    <xsd:complexType name="callboxesType">
+        <xsd:sequence>
+            <xsd:element name="callbox" type="callboxType" minOccurs="1" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    
+ <!--  callboxType definuje jeden callbox  -->
+    <xsd:complexType name="callboxType">
+        <xsd:sequence>
+            <xsd:element name="region" type="nonEmptyString" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="district" type="nonEmptyString" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="municipality" type="nonEmptyString" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="part" type="nonEmptyString" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="street" type="nonEmptyString" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="note" type="nonEmptyString" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+<xsd:attribute name="vtaid" type="xsd:positiveInteger" use="required"/>
+    </xsd:complexType>
+    
+    <!--  neprazdny retezec  -->
+    <xsd:simpleType name="nonEmptyString">
+        <xsd:restriction base="xsd:string">
+        <xsd:minLength value="1"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    
+</xsd:schema>
