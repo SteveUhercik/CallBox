@@ -8,6 +8,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -192,6 +194,10 @@ public class CsvToXml {
     StreamResult result = new StreamResult(new FileOutputStream(fileName));
     transformer.transform(source, result);
   }
+  
+  public Document getDocument() {
+    return document;
+  }
 
   public static void main(String[] args) throws SAXException, ParserConfigurationException, IOException, TransformerException {
     if (args.length < 2) {
@@ -207,6 +213,13 @@ public class CsvToXml {
     System.err.println("Writing output...");
     domTest.serializetoXML(args[1]);
     System.err.println("Ready.");
+    
+    //============= 
+    //try {
+    //  GeocodingUtils.geocodeCallBoxes(domTest.getDocument());
+    //} catch (ParserConfigurationException ex) {
+    //  Logger.getLogger(CsvToXml.class.getName()).log(Level.SEVERE, null, ex);
+    //}
   }
 
 }
