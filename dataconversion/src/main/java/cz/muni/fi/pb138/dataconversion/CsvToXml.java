@@ -1,13 +1,18 @@
 package cz.muni.fi.pb138.dataconversion;
 
+import com.ibm.icu.text.CharsetDetector;
+import com.ibm.icu.text.CharsetMatch;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -25,6 +30,8 @@ import org.xml.sax.SAXException;
  * @author Adam Krejci
  */
 public class CsvToXml {
+  
+  public static final String CALLBOXES_XSD_FILE_LOCATION = "../data/callboxes.xsd";
 
     /**
      * @param args the command line arguments
@@ -40,7 +47,7 @@ public class CsvToXml {
         DocumentBuilder builder = factory.newDocumentBuilder();
         document = builder.newDocument();
         Element rootElement = document.createElement("callboxes");
-        rootElement.setAttributeNS("http://www.w3.org/2001/XMLSchema-instance", "xsi:noNamespaceSchemaLocation", "callboxes.xsd");
+        rootElement.setAttributeNS("http://www.w3.org/2001/XMLSchema-instance", "xsi:noNamespaceSchemaLocation", CALLBOXES_XSD_FILE_LOCATION);
         document.appendChild(rootElement);
     }
 
@@ -106,10 +113,13 @@ public class CsvToXml {
      */
     public void processFile(String fileName) throws IOException {
         BufferedReader reader = null;
-
+        File file = new File(fileName);
+        
         try {
-            reader = new BufferedReader(new FileReader(new File(fileName)));
-            String line;
+            FileInputStream fileInputStream = new FileInputStream(file);
+            InputStreamReader r = new InputStreamReader(fileInputStream, getFileEncoding(file));
+            reader = new BufferedReader(r);
+            String line = null;
             reader.readLine(); //header
             while ((line = reader.readLine()) != null) {
                 String[] splitLine = line.split(";");
@@ -131,7 +141,7 @@ public class CsvToXml {
 
             }
         } catch (IOException e) {
-            throw new IOException(e);
+            e.printStackTrace();
         } finally{
             try{
                 reader.close();
@@ -139,6 +149,21 @@ public class CsvToXml {
                 throw new IOException("Error while closing file: " + fileName);
             }
         }
+    }
+    
+    private String getFileEncoding(File file) throws IOException {
+      String fileEncoding = null;
+
+      FileInputStream fileInputStream = new FileInputStream(file);
+      CharsetDetector cd = new CharsetDetector();
+      byte[] fileContent = new byte[(int) file.length()];
+      fileInputStream.read(fileContent);
+      cd.setText(fileContent);
+      CharsetMatch cm = cd.detect();
+      fileEncoding = cm.getName();
+      fileInputStream.close();
+
+      return fileEncoding;
     }
 
     /**
@@ -156,6 +181,8 @@ public class CsvToXml {
         TransformerConfigurationException, TransformerException {
         TransformerFactory factory = TransformerFactory.newInstance();
         Transformer transformer = factory.newTransformer();
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
         DOMSource source = new DOMSource(document);
         StreamResult result = new StreamResult(new FileOutputStream(fileName));
         transformer.transform(source, result);
