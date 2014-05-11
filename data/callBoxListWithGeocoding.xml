@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<callboxes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="callBoxesWithGeolocation.xsd">
+  <callbox vtaid="387228010">
+    <region>Jihočeský</region>
+    <district>České Budějovice</district>
+    <municipality>Adamov</municipality>
+    <part>Adamov</part>
+    <street>Dělnická</street>
+    <note>prodejna smíšené zboží</note>
+  <location>
+      <lat>48.9706418</lat>
+      <lng>14.4943513</lng>
+    </location>
+  </callbox>
+</callboxes>
