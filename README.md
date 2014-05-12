@@ -15,7 +15,7 @@ Maven aplikace bude sestávat z více modulů:
 
 Oficiální dokument obsahující adresy telefonních automatů bude třeba převést z formátu CSV do XML. Tato funkcionalita bude implementována v modulu dataconversion. K vygenerovanému XML bude vytvořeno i XML schéma.
 
-**2.2 Doplnění geokování do XML obsahujícího adresy**
+**2.2 Doplnění geokódování do XML obsahujícího adresy**
 
 Aby bylo možné používat javascriptové Google Maps API. Bude třeba do dat převedených z XML doplnit souřadnice lokací. Toho bude dosaženo pomocí Google Geocoding API. Tato funkcionalita bude implementována v modulu dataconversion.
 Data obsahují více než 5000 adres telefonních automatů, ale Google Geocoding API umožňuje maximálně 2500 dotazů za 24 hodin, proto tyto data budou získávána postupně, až nakonec dostaneme geolokace všech automatů.
