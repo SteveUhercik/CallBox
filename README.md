@@ -39,7 +39,7 @@ Java webová aplikace, kde za pomocí Google Maps API budou v mapě zaznačeny t
 
 **Mgr. Adam Krejčí, učo 324635**
 
-**Bc. Tomáš Lestyan, učo 35935**
+**Bc. Tomáš Lestyan, učo 359357**
 
 **Bc. Eduard Tomek, učo 324681**
 
