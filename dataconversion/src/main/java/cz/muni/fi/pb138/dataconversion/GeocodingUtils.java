@@ -28,6 +28,7 @@ import org.xml.sax.SAXException;
  * @author Eduard Tomek
  */
 public class GeocodingUtils {
+  public static Logger log = Logger.getLogger(GeocodingUtils.class.getSimpleName());
 
   public static final String GOOGLE_GEOCODE_URL = "http://maps.googleapis.com/maps/api/geocode/";
   public static final String GOOGLE_GEOCODE_URL_ADDRESS = "?&sensor=false&address=";
@@ -73,7 +74,7 @@ public class GeocodingUtils {
       Element callBox = (Element) inputCallBoxesNodeList.item(i);
       Element geocodedCallBox = geocodeCallBox(inputCallBoxes, callBox);
       if (geocodedCallBox == null) {
-        Logger.getLogger(GeocodingUtils.class.getName()).log(Level.SEVERE, "Cannot geocode " + i + "th element. Skipping."); 
+        log.log(Level.SEVERE, "Cannot geocode " + i + "th element. Skipping."); 
       }
       else {
         result.adoptNode(geocodedCallBox);
@@ -104,6 +105,7 @@ public class GeocodingUtils {
    */
   private static Element geocodeCallBox(Document outputDocument, Element callBox) {
     String fullUrl = getFullUrl(callBox);
+    log.log(Level.INFO, fullUrl);
     InputStream is = null;
     try {
       URL url = new URL(fullUrl);
@@ -126,8 +128,7 @@ public class GeocodingUtils {
       callBox.appendChild(newLocation);
 
     } catch (IOException | ParserConfigurationException | SAXException ex) {
-      Logger.getLogger(GeocodingUtils.class.getName())
-              .log(Level.SEVERE, "Exception raised while processing url " + fullUrl, ex);
+      log.log(Level.SEVERE, "Exception raised while processing url " + fullUrl, ex);
     } finally {
       try {
         is.close();
