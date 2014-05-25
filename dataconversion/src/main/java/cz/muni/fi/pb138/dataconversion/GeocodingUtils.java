@@ -3,9 +3,9 @@ package cz.muni.fi.pb138.dataconversion;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.Normalizer;
+import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.XMLConstants;
@@ -19,6 +19,7 @@ import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
@@ -29,13 +30,14 @@ import org.xml.sax.SAXException;
  */
 public class GeocodingUtils {
   public static Logger log = Logger.getLogger(GeocodingUtils.class.getSimpleName());
+  
 
   public static final String GOOGLE_GEOCODE_URL = "http://maps.googleapis.com/maps/api/geocode/";
   public static final String GOOGLE_GEOCODE_URL_ADDRESS = "?&sensor=false&address=";
   public static final String RESPONSE_TYPE = "xml";
   public static final String LINE_SEPARATOR = "\n";
   
-  public static final String XSD_FILE_NAME = "callBoxesWithGeolocation.xsd";
+  public static final String XSD_FILE_NAME = "callBoxesWithGeocoding.xsd";
 
   public static final String CALLBOXES = "callboxes";
   public static final String CALLBOX = "callbox";
@@ -54,14 +56,13 @@ public class GeocodingUtils {
    * @param endElementIndex determines at which elements index will geocoding end
    * @return geocoded document
    * @throws ParserConfigurationException 
+   * @throws java.lang.InterruptedException 
    */
   public static Document geocodeCallBoxes(Document inputCallBoxes, int startElementIndex, 
-          int endElementIndex) throws ParserConfigurationException {
+          int endElementIndex) throws ParserConfigurationException, InterruptedException {
     Document result = generateNewDocument(XSD_FILE_NAME);
-    NodeList callBoxesNodeList = result.getElementsByTagName(CALLBOXES);
-    Element newCallBoxes = (Element) callBoxesNodeList.item(0);
 
-    NodeList inputCallBoxesNodeList = inputCallBoxes.getElementsByTagName("callbox");
+    NodeList inputCallBoxesNodeList = inputCallBoxes.getElementsByTagName(CALLBOX);
 
     int maxInputCallBoxesIndex = inputCallBoxesNodeList.getLength() - 1;
     if (maxInputCallBoxesIndex < endElementIndex) {
@@ -70,16 +71,18 @@ public class GeocodingUtils {
     if (startElementIndex < 0) {
       startElementIndex = 0;
     }
+    
+    String infoLogMessage = "Bounds: " + startElementIndex + "-" + endElementIndex 
+              + ". Currently processing ";
     for (int i = startElementIndex; i < endElementIndex; i++) {
+      log.log(Level.INFO, infoLogMessage + i + "th element.");
       Element callBox = (Element) inputCallBoxesNodeList.item(i);
-      Element geocodedCallBox = geocodeCallBox(inputCallBoxes, callBox);
-      if (geocodedCallBox == null) {
-        log.log(Level.SEVERE, "Cannot geocode " + i + "th element. Skipping."); 
+      if (callBox == null) {
+        log.log(Level.SEVERE, i + "th callbox is null");
+        continue;
       }
-      else {
-        result.adoptNode(geocodedCallBox);
-        newCallBoxes.appendChild(geocodedCallBox);
-      }
+      geocodeCallBox(result, callBox);
+      Thread.sleep(100); //do little pause (when bad internet connection)
     }
     
     return result;
@@ -103,7 +106,7 @@ public class GeocodingUtils {
    * @param callBox callbox to be geocoded
    * @return geocoded callbox
    */
-  private static Element geocodeCallBox(Document outputDocument, Element callBox) {
+  private static void geocodeCallBox(Document outputDocument, Element callBox) {
     String fullUrl = getFullUrl(callBox);
     log.log(Level.INFO, fullUrl);
     InputStream is = null;
@@ -117,17 +120,24 @@ public class GeocodingUtils {
       NodeList location = d.getElementsByTagName("location");
 
       Element responseLocationElement = (Element) location.item(0);
+      
+      if (responseLocationElement != null) {
+        Node newCallBox = outputDocument.importNode(callBox, true);
+        outputDocument.getDocumentElement().appendChild(newCallBox);
+        
+        Element newLocation = outputDocument.createElement("location");
+        Element newLat = outputDocument.createElement("lat");
+        newLat.setTextContent(responseLocationElement.getElementsByTagName("lat").item(0).getTextContent());
+        Element newLng = outputDocument.createElement("lng");
+        newLng.setTextContent(responseLocationElement.getElementsByTagName("lng").item(0).getTextContent());
+        newLocation.appendChild(newLat);
+        newLocation.appendChild(newLng);
+        newCallBox.appendChild(newLocation);
+      } else {
+        log.log(Level.WARNING, "Null response for address " + fullUrl);
+      }
 
-      Element newLocation = outputDocument.createElement("location");
-      Element newLat = outputDocument.createElement("lat");
-      newLat.setTextContent(responseLocationElement.getElementsByTagName("lat").item(0).getTextContent());
-      Element newLng = outputDocument.createElement("lng");
-      newLng.setTextContent(responseLocationElement.getElementsByTagName("lng").item(0).getTextContent());
-      newLocation.appendChild(newLat);
-      newLocation.appendChild(newLng);
-      callBox.appendChild(newLocation);
-
-    } catch (IOException | ParserConfigurationException | SAXException ex) {
+    } catch (IOException | ParserConfigurationException | SAXException | NullPointerException ex) {
       log.log(Level.SEVERE, "Exception raised while processing url " + fullUrl, ex);
     } finally {
       try {
@@ -136,7 +146,6 @@ public class GeocodingUtils {
         ex.printStackTrace();
       }
     }
-    return callBox;
   }
 
   /**
@@ -160,24 +169,30 @@ public class GeocodingUtils {
 
     // get district text content
     NodeList districtNodeList = callBox.getElementsByTagName("district");
-    Element districtEl = (Element) districtNodeList.item(0);
     String district = null;
-    if (districtEl != null) {
-      district = districtEl.getTextContent();
+    if (districtNodeList != null) {
+      Element districtEl = (Element) districtNodeList.item(0);
+      if (districtEl != null) {
+        district = districtEl.getTextContent();
+      }
     }
     //get municipality text content
-    NodeList municipalityNodeList = callBox.getElementsByTagName("municipality");
-    Element municipalityEl = (Element) municipalityNodeList.item(0);
     String municipality = null;
-    if (municipalityEl != null) {
-      municipality = municipalityEl.getTextContent();
+    NodeList municipalityNodeList = callBox.getElementsByTagName("municipality");
+    if (municipalityNodeList != null) {
+      Element municipalityEl = (Element) municipalityNodeList.item(0);
+      if (municipalityEl != null) {
+        municipality = municipalityEl.getTextContent();
+      }
     }
     //get street text content
-    NodeList streetNodeList = callBox.getElementsByTagName("street");
-    Element streetEl = (Element) streetNodeList.item(0);
     String street = null;
-    if (streetEl != null) {
-      street = streetEl.getTextContent();
+    NodeList streetNodeList = callBox.getElementsByTagName("street");
+    if (streetNodeList != null) {
+      Element streetEl = (Element) streetNodeList.item(0);
+      if (streetEl != null) {
+        street = streetEl.getTextContent();
+      }
     }
 
     //create result (district+municipality+street)
@@ -249,6 +264,11 @@ public class GeocodingUtils {
               + "NOTE: Google allows only 2500 requests per day, \n"
               + "difference between startIndex and endIndex shouldnt be greater than this limit");
     }
+    //config logger
+    log.setLevel(Level.ALL);
+    ConsoleHandler handler = new ConsoleHandler();
+    handler.setLevel(Level.ALL);
+    log.addHandler(handler);
     
     try {
       Document inputDocument = FileUtils.loadXmlFromFile(args[ARGS_INPUT_XML_PATH]);
@@ -259,7 +279,8 @@ public class GeocodingUtils {
         FileUtils.serializetoXML(args[ARGS_OUTPUT_XML_PATH], outputDocument);
         validateCallBoxesWithGeocoding(args[ARGS_OUTPUT_XML_PATH], args[ARGS_OUTPUT_XSD_PATH]);
       }
-    } catch (IOException | ParserConfigurationException | SAXException | TransformerException ex) {
+    } catch (IOException | ParserConfigurationException | SAXException | 
+            TransformerException | InterruptedException ex) {
       ex.printStackTrace();
     }
   }
