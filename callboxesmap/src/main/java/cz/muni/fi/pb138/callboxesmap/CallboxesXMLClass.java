@@ -115,4 +115,33 @@ public class CallboxesXMLClass {
     return list;
    }
    
+   public String generateGps(String areaType, String area){
+        
+        
+        StringBuffer buffer = new StringBuffer();
+        
+        NodeList el =  this.doc.getElementsByTagName("callbox");
+        for(int i=0; i<el.getLength(); i++){
+            Element callbox = (Element) el.item(i);
+            Element searched = (Element) callbox.getElementsByTagName(areaType).item(0);
+            
+            if(area == searched.getTextContent()){
+                Element location = (Element) searched.getElementsByTagName("location").item(0);
+                Element latitude = (Element) location.getElementsByTagName("lat").item(0);
+                Element longitude = (Element) location.getElementsByTagName("lng").item(0);
+                buffer.append(Double.parseDouble(latitude.getTextContent()));
+                buffer.append(",");
+                buffer.append(Double.parseDouble(longitude.getTextContent()));
+            
+                if(i!=el.getLength()-1){
+                    buffer.append(";");
+                }
+            }
+        }
+        
+        System.out.println(buffer.toString());
+        
+        return buffer.toString();
+    }
+   
 }
