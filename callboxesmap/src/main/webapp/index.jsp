@@ -23,7 +23,7 @@
                     
     var map;
     var markersArray = [];
-    var areaTypes = ['district', 'department', 'city', 'ward', 'street']
+    var areaTypes = ['region', 'district', 'municipality', 'part', 'street']
 
     function initializeMap() {
 
