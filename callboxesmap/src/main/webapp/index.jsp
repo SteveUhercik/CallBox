@@ -18,7 +18,6 @@
                 src="https://maps.googleapis.com/maps/api/js?libraries=places,drawing,geometry&sensor=false">
         </script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-        <script src="loadxmldoc.js"></script>>
         <script>
                     
     var map;

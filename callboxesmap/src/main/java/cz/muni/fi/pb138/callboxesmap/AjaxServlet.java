@@ -16,7 +16,8 @@ import javax.servlet.http.HttpServletResponse;
  * @author Stefan Uhercik (stefan.uhercik@ibacz.eu)
  */
 public class AjaxServlet extends HttpServlet {
-
+    
+    private CallboxesXMLClass callboxes = new CallboxesXMLClass();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter writer = resp.getWriter();
@@ -29,7 +30,7 @@ public class AjaxServlet extends HttpServlet {
         buffer.append("<select class='area-type' id='");
         buffer.append(areaType);
         buffer.append("'>");
-        List<String> options = getFakeOptions(areaType);
+        List<String> options = getOptions(areaType);
         System.out.println("options count is:"+options.size());
         for (String option : options) {
             buffer.append("<option>");
@@ -40,49 +41,17 @@ public class AjaxServlet extends HttpServlet {
         return buffer.toString();
     }
 
-    private List<String> getFakeOptions(String areaType) {
-        if (areaType.equals("district")) {
-            return new ArrayList<String>() {
-                {
-                    add("Vysocina");
-                    add("Jihomoravsk");
-                    add("Slezk");
-                }
-            };
-        } else if (areaType.equals("department")) {
-            return new ArrayList<String>() {
-                {
-                    add("Brno");
-                    add("Praha");
-                    add("Ostrava");
-                }
-            };
-        } else if (areaType.equals("city")) {
-            return new ArrayList<String>() {
-                {
-                    add("Brno");
-                    add("Praha");
-                    add("Ostrava");
-                }
-            };
-        } else if (areaType.equals("ward")) {
-            return new ArrayList<String>() {
-                {
-                    add("Brno - stred");
-                    add("Bohunice");
-                    add("Stary liskovec");
-                    add("Kralovo pole");
-                }
-            };
+    private List<String> getOptions(String areaType) {
+        if (areaType.equals("region")) {
+            return this.callboxes.getRegions();
+        } else if (areaType.equals("district")) {
+            return this.callboxes.getDistricts("");
+        } else if (areaType.equals("municipality")) {
+            return this.callboxes.getMunicipalities("");
+        } else if (areaType.equals("part")) {
+            return this.callboxes.getParts("");
         } else{
-            return new ArrayList<String>() {
-                {
-                    add("Hrncirska");
-                    add("Masarykova");
-                    add("Benesova");
-                    add("Husitska");
-                }
-            };
+            return this.callboxes.getStreets("");
         }
     }
 
