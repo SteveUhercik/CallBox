@@ -86,58 +86,6 @@
         return gps;
     }
     
-    /*
-     * Generates xpath expression for searching by areatype
-     * 
-     * @param {areaType} area type
-     * @param {value} value of searched area type
-     * @returns {String} xpath expression
-     */
-    function searchByAddress (areaType, value) {
-
-        var xpath = "";
-
-        if(areaType == "district"){
-            xpath = "/callboxes/callbox[region/text()='" + value + "']/location";
-        }
-        if(areaType == "department"){
-            xpath = "/callboxes/callbox[district/text()='" + value + "']/location";
-        }
-        if(areaType == "city"){
-            xpath = "/callboxes/callbox[municipality/text()='" + value + "']/location";
-        }
-        if(areaType == "ward"){
-            xpath = "/callboxes/callbox[part/text()='" + value + "']/location";
-        }
-        if(areaType == "street"){
-            xpath = "/callboxes/callbox[street/text()='" + value + "']/location";
-        }
-
-        return xpath;
-
-        }
-        
-    /*
-     * Generates xpath expression for searching callboxes in cca 500 m circle
-     * @param {latitude} 
-     * @param {longitude}
-     * @returns {String} xpath expression
-     */
-    function searchByLocation(latitude, longitude){
-        var xpath = "";
-        area = 0.05; // for 500m circle
-        var maxlat = latitude + area;
-        var minlat = latitude - area;
-        var maxlng = longitude + area;
-        var minlng = longitude - area;
-
-        xpath = "/callboxes/callbox/location[lat<" + maxlat + "and lat>" + minlat + "and lng<" + maxlng + "and lng>" + minlng + "]";
-
-        return xpath;
-    }
-        
-        
-
     function initializeForm(){
         $.ajax({
             url: 'ajaxservlet',

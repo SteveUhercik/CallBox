@@ -22,10 +22,10 @@ public class AjaxServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter writer = resp.getWriter();
         String areaType = req.getParameter("area-type");
-        writer.append(constructCombobox(areaType));
+        writer.append(constructCombobox(areaType, null));
     }
 
-    private String constructCombobox(String areaType) {
+    private String constructCombobox(String areaType, String parent) {
         StringBuffer buffer = new StringBuffer();
         buffer.append("<select class='area-type' id='");
         buffer.append(areaType);
