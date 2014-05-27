@@ -4,24 +4,27 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
-import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 import java.io.File;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.ArrayList;
-import java.util.List;
 
  
 public class CallboxesXMLClass {
     
   private Document doc;
+  private final char separatorChar = File.separatorChar; //system separator
  
   public CallboxesXMLClass() {
     try {
- 
+        String parentDir = (new File(CallboxesXMLClass.class.getProtectionDomain().getCodeSource()  //universal relative path
+                .getLocation().getPath()).getParentFile().getParentFile().getParentFile()
+                .getParentFile().getParentFile().getParentFile().getParentFile().getParentFile()
+                .getParentFile().getParentFile().getParentFile().getPath());
+        System.out.println("dir: " + parentDir);
 	File fXmlFile;
-        fXmlFile = new File("C:\\Users\\Tomáš\\Documents\\GitHub\\CallBox\\data\\callBoxListWithGeocoding_0-2400.xml");
+        fXmlFile = new File(parentDir + separatorChar + "data" + separatorChar + "callBoxesWithGeocoding.xml");
 	DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 	DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 
