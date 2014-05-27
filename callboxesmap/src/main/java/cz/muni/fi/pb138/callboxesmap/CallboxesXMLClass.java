@@ -117,7 +117,7 @@ public class CallboxesXMLClass {
     return list;
    }
    
-   public String generateGps(String areaType, String area){
+   public String callboxesByArea(String areaType, String area){
         
         
         StringBuffer buffer = new StringBuffer();

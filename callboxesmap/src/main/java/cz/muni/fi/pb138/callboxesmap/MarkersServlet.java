@@ -22,6 +22,9 @@ public class MarkersServlet extends HttpServlet{
         while(parameterNames.hasMoreElements()){
             System.out.println("parameter name:"+parameterNames.nextElement());
         }
+        //TODO
+        //metodu generateGPS nahradit metodami nearestCallboxes a callboxesByArea podla typu vyhladavania
+        //TODO
         resp.getWriter().append(generateGps());
     }
     
