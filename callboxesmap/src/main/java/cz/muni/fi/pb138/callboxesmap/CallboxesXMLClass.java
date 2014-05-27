@@ -22,7 +22,6 @@ public class CallboxesXMLClass {
                 .getLocation().getPath()).getParentFile().getParentFile().getParentFile()
                 .getParentFile().getParentFile().getParentFile().getParentFile().getParentFile()
                 .getParentFile().getParentFile().getParentFile().getPath());
-        System.out.println("dir: " + parentDir);
 	File fXmlFile;
         fXmlFile = new File(parentDir + separatorChar + "data" + separatorChar + "callBoxesWithGeocoding.xml");
 	DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -145,6 +144,38 @@ public class CallboxesXMLClass {
         System.out.println(buffer.toString());
         
         return buffer.toString();
+    }  
+   
+/**
+ * Returns locations of all callboxes within specified radius from specified point 
+ * @param lat point lattitude (String in degrees decimal format, e.g. "49.2354")
+ * @param lng point longitude (String in degrees decimal format, e.g. "16.05534")
+ * @param diameter radius in meters (String in decimal format, e.g. "1000.0")
+ * @return 
+ */
+public String nearestCallBoxes(String lat, String lng, String diameter){
+    final double latDegree = 111221.9; //one degree of latitude is 111221.9 meters 
+    final double lngDegree = 71930.5; //one degree of longitude is 71930.5 meters
+    double pointLat = Double.parseDouble(lat);
+    double pointLng = Double.parseDouble(lng);
+    double pointDiameter = Double.parseDouble(diameter);
+    StringBuilder builder = new StringBuilder();
+    NodeList el = this.doc.getElementsByTagName("callbox");
+    for (int i = 0; i < el.getLength(); i++){
+        Element callBox = (Element) el.item(i);
+        double boxLat = Double.parseDouble(callBox.getElementsByTagName("lat").item(0).getTextContent());
+        double boxLng = Double.parseDouble(callBox.getElementsByTagName("lng").item(0).getTextContent());
+        double latMeterDifference = (Math.abs(boxLat - pointLat)) * latDegree;
+        double lngMeterDifference = (Math.abs(boxLng - pointLng)) * lngDegree;
+        double distance = Math.sqrt(latMeterDifference*latMeterDifference + lngMeterDifference*lngMeterDifference);  
+        if (distance <= pointDiameter){
+            System.out.println(distance);
+            System.out.println(callBox.getElementsByTagName("municipality").item(0).getTextContent());
+            builder.append(boxLat).append(",").append(boxLng).append(";");
+        }
     }
+    System.out.println("out: " + builder.toString());
+    return builder.toString();
+}
    
 }
