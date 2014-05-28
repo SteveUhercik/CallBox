@@ -25,6 +25,7 @@ public class MarkersServlet extends HttpServlet{
         //TODO
         //metodu generateGPS nahradit metodami nearestCallboxes a callboxesByArea podla typu vyhladavania
         //TODO
+        resp.setCharacterEncoding(CallboxesXMLClass.CHARACTER_ENCODING);
         resp.getWriter().append(generateGps());
     }
     

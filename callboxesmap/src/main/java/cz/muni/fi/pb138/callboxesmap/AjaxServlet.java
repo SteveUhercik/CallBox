@@ -15,8 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 public class AjaxServlet extends HttpServlet {
     
     private final CallboxesXMLClass callboxes = new CallboxesXMLClass();
+    
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setCharacterEncoding(CallboxesXMLClass.CHARACTER_ENCODING);
         PrintWriter writer = resp.getWriter();
         String areaType = req.getParameter("area-type");
         writer.append(constructCombobox(areaType));

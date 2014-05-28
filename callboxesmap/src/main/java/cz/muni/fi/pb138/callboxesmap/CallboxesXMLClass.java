@@ -15,6 +15,7 @@ public class CallboxesXMLClass {
     
   private Document doc;
   private final char separatorChar = File.separatorChar; //system separator
+  public static final String CHARACTER_ENCODING = "UTF-8";
  
   public CallboxesXMLClass() {
     try {
