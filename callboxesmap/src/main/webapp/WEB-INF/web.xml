@@ -22,6 +22,15 @@
         <servlet-name>markersservlet</servlet-name>
         <url-pattern>/markersservlet/*</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>callboxesservlet</servlet-name>
+        <servlet-class>cz.muni.fi.pb138.callboxesmap.CallboxesServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>callboxesservlet</servlet-name>
+        <url-pattern>/callboxesservlet/*</url-pattern>
+    </servlet-mapping>
   
   
 </web-app>

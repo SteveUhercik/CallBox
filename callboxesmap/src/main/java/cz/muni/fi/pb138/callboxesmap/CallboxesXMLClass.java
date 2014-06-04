@@ -177,6 +177,10 @@ public String nearestCallBoxes(String lat, String lng, String diameter){
     }
     System.out.println("out: " + builder.toString());
     return builder.toString();
-}
+  }
+  
+  public Document getDocument() {
+    return doc;
+  }
    
 }
