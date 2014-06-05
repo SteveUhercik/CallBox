@@ -34,7 +34,6 @@ public class CallboxesServlet extends HttpServlet {
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     resp.setCharacterEncoding(CallboxesXMLClass.CHARACTER_ENCODING);
     PrintWriter writer = resp.getWriter();
-    String areaType = req.getParameter("json");
     writer.append(getJsonCallboxes().toString());
   }
   
