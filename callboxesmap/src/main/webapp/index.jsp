@@ -7,7 +7,7 @@
   <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <script type="text/javascript"
-            src="https://maps.googleapis.com/maps/api/js">
+            src="https://maps.googleapis.com/maps/api/js?libraries=places">
     </script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script type="text/javascript" src="js/callboxes.js"></script>
@@ -21,6 +21,7 @@
         <input type="button" id="checkMyPosition" class="pull-right" value="Check my position">
       </form>
     </div>
-    <div id="map-canvas" class="helloworld"/>
+    <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+    <div id="map-canvas"></div>
   </body>
 </html>
