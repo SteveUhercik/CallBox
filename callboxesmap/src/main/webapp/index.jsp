@@ -15,9 +15,10 @@
     <link rel="stylesheet" href="css/style.css" type="text/css">
   </head>
   <body>
-    <div style="height: 5%;background-color: #dddddd;">
+    <div class="menu">
       <form id="callBoxForm">
         <input type="button" id="submit">
+        <input type="button" id="checkMyPosition" class="pull-right" value="Check my position">
       </form>
     </div>
     <div id="map-canvas" class="helloworld"/>

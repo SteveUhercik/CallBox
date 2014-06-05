@@ -85,6 +85,7 @@
 
         initializeForm();
         loadAllCallboxes();
+        initCheckPosition();
 
         $("#callBoxForm").on("change", ".area-type", function(event) {
             var currentArea = $(this).attr("id");

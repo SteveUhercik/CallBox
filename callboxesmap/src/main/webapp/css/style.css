@@ -13,3 +13,12 @@ body {
   height: 100%;
   width: 100%
 }
+
+.menu {
+  height: 5%;
+  background-color: #dddddd;
+}
+
+.pull-right {
+  float: right;
+}
