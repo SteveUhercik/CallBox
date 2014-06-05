@@ -55,15 +55,17 @@ function showMarkers(data) {
     var contentString = "<div><b>Callbox number " + callbox.vtaid
       + "</b><br>Region: " + callbox.region 
       + "<br>District: " + callbox.district
-      + "<br>Part: " + callbox.part
+      + "<br>Municipality: " + callbox.part
+      + (callbox.part ? "<br>Part: " + callbox.part : "")
+      + (callbox.street ? "<br>Street: " + callbox.street : "")
       + (callbox.note ? "<br>Note: " + callbox.note : "")
       + "</div>"
     ;
 
     var infowindow = new google.maps.InfoWindow({
       content: contentString,
-      maxWidth: 300,
-      maxHeight: 200
+      maxWidth: 400,
+      maxHeight: 300
     });
 
     var marker = new google.maps.Marker({
