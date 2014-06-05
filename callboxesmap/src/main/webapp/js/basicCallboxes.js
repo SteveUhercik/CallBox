@@ -68,8 +68,7 @@ function showMarkers(data) {
 
     var marker = new google.maps.Marker({
       position: location,
-      map: map,
-      title: contentString
+      map: map
     });
     
     marker.html = contentString;
