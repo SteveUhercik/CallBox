@@ -18,12 +18,13 @@
                 src="https://maps.googleapis.com/maps/api/js?libraries=places,drawing,geometry&sensor=false">
         </script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-        <script src="loadxmldoc.js"></script>
+        <!--<script src="loadxmldoc.js"></script>-->
         <script>
                     
     var map;
     var markersArray = [];
-    var areaTypes = ['district', 'department', 'city', 'ward', 'street']
+    //var areaTypes = ['district', 'department', 'city', 'ward', 'street']
+    var areaTypes = ['region', 'district', 'municipality', 'part', 'street']
 
     function initializeMap() {
 
@@ -71,9 +72,7 @@
         for(var i=0;i<gps.length;i++){
             var marker = new google.maps.Marker({
                 position: gps[i],
-                map: map,
-                caption:
-                
+                map: map                
             });
             markersArray.push(marker);
         }
@@ -164,6 +163,7 @@
 
         $("#callBoxForm").on("change", ".area-type", function(event) {
             var currentArea = $(this).attr("id");
+            var selectedValue = $(this).find('option:selected').text();
             areaTypeIndex = areaTypes.indexOf(currentArea);
             if (areaTypeIndex < areaTypes.length + 1) {
                 areaTypeIndex += 1;
@@ -171,7 +171,8 @@
             $.ajax({
                 url: 'ajaxservlet',
                 data: {
-                    'area-type': areaTypes[areaTypeIndex]
+                    'area-type': areaTypes[areaTypeIndex],
+                    'parent':selectedValue
                 },
                 success: function(generatedCombobox) {
                     removeComboboxesToTheRight(currentArea);
@@ -226,7 +227,7 @@
     <body>
         <div style="height: 5%;background-color: #dddddd;">
             <form id="callBoxForm">
-                <input type="button" id="submit">
+                <input type="button" id="submit" value="OK">
             </form>
         </div>
         <div id="map-canvas" class="helloworld"/>
