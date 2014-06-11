@@ -70,6 +70,7 @@
 
         $("#callBoxForm").on("change", ".area-type", function(event) {
             var currentArea = $(this).attr("id");
+            var vybranaHodnota = $(this).val();
             areaTypeIndex = areaTypes.indexOf(currentArea);
             if (areaTypeIndex < areaTypes.length + 1) {
                 areaTypeIndex += 1;
@@ -77,7 +78,8 @@
             $.ajax({
                 url: 'ajaxservlet',
                 data: {
-                    'area-type': areaTypes[areaTypeIndex]
+                    'area-type': areaTypes[areaTypeIndex],
+                    'selected' : vybranaHodnota
                 },
                 success: function(generatedCombobox) {
                     removeComboboxesToTheRight(currentArea);
