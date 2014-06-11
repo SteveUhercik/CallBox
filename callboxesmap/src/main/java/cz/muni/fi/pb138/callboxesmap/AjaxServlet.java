@@ -21,11 +21,10 @@ public class AjaxServlet extends HttpServlet {
         resp.setCharacterEncoding(CallboxesXMLClass.CHARACTER_ENCODING);
         PrintWriter writer = resp.getWriter();
         String areaType = req.getParameter("area-type");
-        String parent = req.getParameter("parent");
-        writer.append(constructCombobox(areaType,parent));
+        writer.append(constructCombobox(areaType));
     }
 
-    private String constructCombobox(String areaType,String parent) {
+    private String constructCombobox(String areaType) {
         StringBuffer buffer = new StringBuffer();
         buffer.append("<select class='area-type' id='");
         buffer.append(areaType);
@@ -34,7 +33,7 @@ public class AjaxServlet extends HttpServlet {
         //TODO
         //do getOptions dostat rodica, potom odkomentova v get funkciach if, ktory zobrazi okresy, mesta, ktore patria k sebe
         //TODO
-        List<String> options = getOptions(areaType, parent);
+        List<String> options = getOptions(areaType, null);
         System.out.println("options count is:"+options.size());
         for (String option : options) {
             buffer.append("<option>");
