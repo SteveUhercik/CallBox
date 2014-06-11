@@ -3,21 +3,6 @@
     var markersArray = [];
     var areaTypes = ['region', 'district', 'municipality', 'part', 'street']
 
-    function initializeMap() {
-
-        var defaultLocation = {
-            latitude: "49.8",
-            longitude: "15.5"
-        };
-
-        var mapOptions = {
-            center: new google.maps.LatLng(defaultLocation.latitude, defaultLocation.longitude),
-            zoom: 8
-        };
-        map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
-        var myLatlng = new google.maps.LatLng(defaultLocation.latitude, defaultLocation.longitude);
-    }
-
     function removeComboboxesToTheRight(comboBoxId) {
         $.each($("#" + comboBoxId).nextAll(".area-type"), function(index, value) {
             $(value).remove();
@@ -80,13 +65,8 @@
 
 
     $(document).ready(function() {
-
         initializeMap();
-
         initializeForm();
-        loadAllCallboxes();
-        initCheckPosition();
-        initSearchBox();
 
         $("#callBoxForm").on("change", ".area-type", function(event) {
             var currentArea = $(this).attr("id");

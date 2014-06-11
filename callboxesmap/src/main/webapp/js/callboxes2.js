@@ -5,13 +5,20 @@
  * - map - search by address - 100%
  */
 
+$(document).ready(function() {
+  initializeMap();
+  loadAllCallboxes();
+  initCheckPosition();
+  initSearchBox();
+});
+
 /**
  * Adds a search box to a map, using the Google Place Autocomplete feature
  */
 function initSearchBox() {
   // Create the search box and link it to the UI element.
   var input = (
-      document.getElementById('pac-input'));
+          document.getElementById('pac-input'));
   map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
   var searchBox = new google.maps.places.SearchBox(input);
@@ -45,7 +52,7 @@ function initCheckPosition() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(success, error);
     } else {
-     alert('This feature is not supported by your browser');
+      alert('This feature is not supported by your browser');
     }
   });
 }
@@ -62,9 +69,9 @@ function error(msg) {
 
 function loadAllCallboxes() {
   $.get("callboxesservlet")
-    .done(function(data){
-      showMarkers(data);
-    });
+          .done(function(data) {
+            showMarkers(data);
+          });
 }
 
 /**
@@ -80,14 +87,14 @@ function showMarkers(data) {
     var location = new google.maps.LatLng(callbox.location.lat, callbox.location.lng);
 
     var contentString = "<div><b>Callbox number " + callbox.vtaid
-      + "</b><br>Region: " + callbox.region 
-      + "<br>District: " + callbox.district
-      + "<br>Municipality: " + callbox.part
-      + (callbox.part ? "<br>Part: " + callbox.part : "")
-      + (callbox.street ? "<br>Street: " + callbox.street : "")
-      + (callbox.note ? "<br>Note: " + callbox.note : "")
-      + "</div>"
-    ;
+            + "</b><br>Region: " + callbox.region
+            + "<br>District: " + callbox.district
+            + "<br>Municipality: " + callbox.part
+            + (callbox.part ? "<br>Part: " + callbox.part : "")
+            + (callbox.street ? "<br>Street: " + callbox.street : "")
+            + (callbox.note ? "<br>Note: " + callbox.note : "")
+            + "</div>"
+            ;
 
     var infowindow = new google.maps.InfoWindow({
       content: contentString,
@@ -99,15 +106,15 @@ function showMarkers(data) {
       position: location,
       map: map
     });
-    
+
     marker.html = contentString;
     markers.push(marker);
   }
-  
+
   for (var i = 0; i < markers.length; i++) {
     var marker = markers[i];
     //see http://you.arenot.me/2010/06/29/google-maps-api-v3-0-multiple-markers-multiple-infowindows/
-    google.maps.event.addListener(marker, 'click', function () {
+    google.maps.event.addListener(marker, 'click', function() {
       infowindow.setContent(this.html);
       infowindow.open(map, this);
     });
