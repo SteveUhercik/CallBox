@@ -58,9 +58,15 @@ public class CallboxesXMLClass {
         Element callbox = (Element) el.item(i);
         Element region = (Element) callbox.getElementsByTagName("region").item(0);
         Element district = (Element) callbox.getElementsByTagName("district").item(0);
-        //if(parent == region.getTextContent()){
+        
+        System.out.println(parent + "-> parent");
+        System.out.println(region.getTextContent() + "-> region");
+        
+        
+        if(parent.equalsIgnoreCase(region.getTextContent())){
+            
             districts.add(district.getTextContent());
-        //}
+        }
     }
     ArrayList<String> list = new ArrayList<String>();
     list.addAll(districts);
@@ -121,14 +127,14 @@ public class CallboxesXMLClass {
    public String callboxesByArea(String areaType, String area){
         
         
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         
         NodeList el =  this.doc.getElementsByTagName("callbox");
         for(int i=0; i<el.getLength(); i++){
             Element callbox = (Element) el.item(i);
             Element searched = (Element) callbox.getElementsByTagName(areaType).item(0);
             
-            if(area == searched.getTextContent()){
+            if(area.equals(searched.getTextContent())){
                 Element location = (Element) searched.getElementsByTagName("location").item(0);
                 Element latitude = (Element) location.getElementsByTagName("lat").item(0);
                 Element longitude = (Element) location.getElementsByTagName("lng").item(0);
