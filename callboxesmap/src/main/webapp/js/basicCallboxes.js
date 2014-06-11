@@ -2,43 +2,15 @@
  * Basic functionality
  * - show all callboxes - 100%
  * - users current position and zoom - 100%
- * - map - search by address - 100%
+ * - map - search by address - 0%
+ * 
+ *   
  */
-
-/**
- * Adds a search box to a map, using the Google Place Autocomplete feature
- */
-function initSearchBox() {
-  // Create the search box and link it to the UI element.
-  var input = (
-      document.getElementById('pac-input'));
-  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
-  var searchBox = new google.maps.places.SearchBox(input);
-
-  // Listen for the event fired when the user selects an item from the
-  // pick list. Retrieve the matching places for that item.
-  google.maps.event.addListener(searchBox, 'places_changed', function() {
-    var places = searchBox.getPlaces();
-    if (places[0]) {
-      var bounds = new google.maps.LatLngBounds();
-      bounds.extend(places[0].geometry.location);
-      map.fitBounds(bounds);
-      map.setZoom(14);
-    }
-    //else todo what if place not found?
-  });
-
-  // Bias the SearchBox results towards places that are within the bounds of the
-  // current map's viewport.
-  google.maps.event.addListener(map, 'bounds_changed', function() {
-    var bounds = map.getBounds();
-    searchBox.setBounds(bounds);
-  });
-}
 
 /**
  * Finds users current position and zooms the map there
+ * 
+ * @returns {undefined}
  */
 function initCheckPosition() {
   $("#checkMyPosition").click(function() {
@@ -47,12 +19,12 @@ function initCheckPosition() {
     } else {
      alert('This feature is not supported by your browser');
     }
-  });
+  });  
 }
 
 function success(data) {
   map.setCenter({lat: data.coords.latitude, lng: data.coords.longitude});
-  map.setZoom(14);
+  map.setZoom(15);
   //todo fill places search box with address
 }
 
@@ -70,7 +42,8 @@ function loadAllCallboxes() {
 /**
  * Adds markers with info window into map
  * 
- * @param {json} data all callboxes data
+ * @param {type} data
+ * @returns {undefined}
  */
 function showMarkers(data) {
   data = JSON.parse(data);
