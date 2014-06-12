@@ -27,12 +27,9 @@ public class MarkersServlet extends HttpServlet{
         String selected = req.getParameter("selected");
         
         resp.setCharacterEncoding(CallboxesXMLClass.CHARACTER_ENCODING);
-        resp.getWriter().append(generateGps());
+        resp.getWriter().append(callboxes.callboxesByArea(areaType, selected));
     }
     
-    private String generateGps(){
-        return callboxes.callboxesByArea(areaType, selected);
-    }
     
     
     
