@@ -81,9 +81,9 @@ public class CallboxesXMLClass {
         Element callbox = (Element) el.item(i);
         Element municipality = (Element) callbox.getElementsByTagName("municipality").item(0);
         Element district = (Element) callbox.getElementsByTagName("district").item(0);
-        //if(parent.equalsIgnoreCase(district.getTextContent())){
+        if(parent.equalsIgnoreCase(district.getTextContent())){
             municipalities.add(municipality.getTextContent());
-        //}
+        }
     }
     ArrayList<String> list = new ArrayList<String>();
     list.addAll(municipalities);
@@ -98,9 +98,9 @@ public class CallboxesXMLClass {
         Element callbox = (Element) el.item(i);
         Element municipality = (Element) callbox.getElementsByTagName("municipality").item(0);
         Element part = (Element) callbox.getElementsByTagName("part").item(0);
-        //if(parent.equalsIgnoreCase(municipality.getTextContent())){
+        if(parent.equalsIgnoreCase(municipality.getTextContent())){
             parts.add(part.getTextContent());
-        //}
+        }
     }
     ArrayList<String> list = new ArrayList<String>();
     list.addAll(parts);
@@ -115,9 +115,9 @@ public class CallboxesXMLClass {
         Element callbox = (Element) el.item(i);
         Element street = (Element) callbox.getElementsByTagName("street").item(0);
         Element part = (Element) callbox.getElementsByTagName("part").item(0);
-        //if(parent.equalsIgnoreCase(street.getTextContent())){
+        if(parent.equalsIgnoreCase(street.getTextContent())){
             streets.add(street.getTextContent());
-        //}
+        }
     }
     ArrayList<String> list = new ArrayList<String>();
     list.addAll(streets);
