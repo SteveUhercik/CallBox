@@ -22,8 +22,9 @@ public class MarkersServlet extends HttpServlet{
         while(parameterNames.hasMoreElements()){
             System.out.println("parameter name:"+parameterNames.nextElement());
         }
-        String areaType = req.getParameter("area-type");
-        String selected = req.getParameter("selected");
+        //TODO
+        //metodu generateGPS nahradit metodami nearestCallboxes a callboxesByArea podla typu vyhladavania
+        //TODO
         resp.setCharacterEncoding(CallboxesXMLClass.CHARACTER_ENCODING);
         resp.getWriter().append(generateGps());
     }
