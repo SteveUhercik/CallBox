@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<article lang="cs">
+  <para>Závěrečná zpráva</para>
+  <sect1>
+    <title/>
+    <sect2>
+      <title>Název projektu: Mapa telefonních automatů </title>
+    </sect2>
+    <sect2>
+      <title>Člen týmu: Eduard Tomek</title>
+      <para/>
+      <para>V následujícím textu uvádím můj podíl na řešení projektu.</para>
+    </sect2>
+  </sect1>
+  <sect1><title>1) Geokódování telefonních automatů</title>kódování<para>Při řešení projektu jsem měl k dispozici XML soubor s poštovními adresami telefonních automatů v České Republice. Protože vstupní data obsahovala pouze poštovní adresy telefonních automatů, bylo potřeba k těmto adresám přidat také geografické souřadnice. Geokódování je proces přeměny poštovní adresy na geografické souřadnice. K tomu bylo využito Google Geocoding API (GGAPI). </para><para>Použití GGAPI je jednoduché a přímočaré. V projektu mi stačil pouze HTTP GET na https://maps.googleapis.com/maps/api/geocode/xml?address=“adresa telefonního automatu“ a server v odpovědi vrátil XML strukturu, ve které jsou uvedeny i geografické souřadnice. Ty jsem  potom přidal k datům telefonního automatu a byly tak známy pro budoucí využití. Nakonec jsem ještě výsledný dokument validoval pomocí XSD, které jsem vytvořil. </para><para>Překážkou v geokódování automatů byla skutečnost, že GGAPI dovoluje pro běžné uživatele pouze 2500 požadavků za 24 hodin, ale telefonních automatů bylo více než 5500. Proto jsem program upravil tak, abych mohl v argumentech předat meze indexů automatů, ve kterých se má pracovat. Vyžil jsem VPN MUNI, která mi pokaždé přidělila jinou IP adresu a data jsem natřikrát zpracoval.</para><para>Druhým problémem byla kvalita dodaných dat. Objevují se zde neúplné adresy. V případě malých obcí data obsahují pouze kraj, okres, název obce a někdy poznámku (u pošty, na návsi). U měst navíc někdy ještě ulici, ale bez čísla popisného a velká města v datech zcela chybí. Proto souřadnice vrácené GGAPI často odpovídají středu obce, či středu ulice ve městě, tedy nejsou zcela přesné.</para></sect1>
+  <sect1><title>2) Zobrazení telefonních automatů v mapě</title>Zobrazení telefonních automatů v mapě<para>K zobrazení dat jsem využil Google Maps JavaScript API v3 (GMAPI). Mojí strategíí bylo již na serveru XML data převést do JSON a na klientovi je zpracovat. Při načtení stránky se proto rovnou na mapě vytvoří značky (marker), označující místa všech telefonních automatů. Mapa podporuje standardní funkce jako zoom, posun, leteckou mapu, street view, atd. Přidal jsem také funkce zjištění uživatelovy pozice s využitím HTML5 Geolocation - po kliknutí na tlačítko je mapa zazoomována na zjištěnou uživatelovu lokaci. Vlastní funkcionalita mapy jsem poté ještě rozšířil o vyhledávací pole (search box), kam lze psát adresy a vyhledávat je v mapě, která zazoomuje na nalezenou adresu. Protože automaty jsou již od načtení stránky zobrazeny v mapě, můze uživatel zároveň vidět automaty v okolí.</para><para>Toto řešení však nebylo konzultováno s vedoucím projektu, ale vzešlo z mojí iniciativy, a proto je v projektu označeno jako „verze 2“.</para></sect1>
+</article>
