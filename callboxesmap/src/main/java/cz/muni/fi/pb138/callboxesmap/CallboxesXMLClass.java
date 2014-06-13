@@ -1,14 +1,17 @@
 package cz.muni.fi.pb138.callboxesmap;
 
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.DocumentBuilder;
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Element;
 import java.io.File;
-import java.util.Set;
-import java.util.HashSet;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
  
 public class CallboxesXMLClass {
@@ -16,6 +19,8 @@ public class CallboxesXMLClass {
   private Document doc;
   private final char separatorChar = File.separatorChar; //system separator
   public static final String CHARACTER_ENCODING = "UTF-8";
+  private Map<String, String> childParentPairs;
+  private static final String CALLBOX = "callbox";
  
   public CallboxesXMLClass() {
     try {
@@ -34,102 +39,43 @@ public class CallboxesXMLClass {
     } catch (Exception e) {
 	e.printStackTrace();
     }
+    childParentPairs = new HashMap<String, String>();
+    childParentPairs.put("district", "region");
+    childParentPairs.put("municipality", "district");
+    childParentPairs.put("part", "municipality");
   }
   
-   public ArrayList<String> getRegions() {
-      
+  public Collection<String> getChildOptions(String childTag, String parentTextContent) {
+    Set<String> childOptions = new HashSet<String>();         
+    NodeList el =  this.doc.getElementsByTagName(CALLBOX);   
+    String parentTag = childParentPairs.get(childTag);
+    for (int i = 0; i < el.getLength(); i++) {
+        Element callbox = (Element) el.item(i);
+        Element child = (Element) callbox.getElementsByTagName(childTag).item(0);
+        Element parent = (Element) callbox.getElementsByTagName(parentTag).item(0);
+        if(parentTextContent.equalsIgnoreCase(parent.getTextContent())){
+            childOptions.add(child.getTextContent());
+        }
+    }
+    return childOptions;
+  }
+  
+   public Collection<String> getRegions() {
     Set<String> regions = new HashSet<String>();         
-    NodeList el =  this.doc.getElementsByTagName("callbox");      
+    NodeList el =  this.doc.getElementsByTagName(CALLBOX);      
     for (int i = 0; i < el.getLength(); i++) {
         Element callbox = (Element) el.item(i);
         Element region = (Element) callbox.getElementsByTagName("region").item(0);
         regions.add(region.getTextContent());
     }
-    ArrayList<String> list = new ArrayList<String>();
-    list.addAll(regions);
-    return list;
-   }
-   
-   public ArrayList<String> getDistricts(String parent) {
-      
-    Set<String> districts = new HashSet<String>();         
-    NodeList el =  this.doc.getElementsByTagName("callbox");      
-    for (int i = 0; i < el.getLength(); i++) {
-        Element callbox = (Element) el.item(i);
-        Element region = (Element) callbox.getElementsByTagName("region").item(0);
-        Element district = (Element) callbox.getElementsByTagName("district").item(0);
-        
-        System.out.println(parent + "-> parent");
-        System.out.println(region.getTextContent() + "-> region");
-        
-        
-        if(parent.equalsIgnoreCase(region.getTextContent())){
-            
-            districts.add(district.getTextContent());
-        }
-    }
-    ArrayList<String> list = new ArrayList<String>();
-    list.addAll(districts);
-    return list;
-   }
-   
-   public ArrayList<String> getMunicipalities(String parent) {
-      
-    Set<String> municipalities = new HashSet<String>();         
-    NodeList el =  this.doc.getElementsByTagName("callbox");      
-    for (int i = 0; i < el.getLength(); i++) {
-        Element callbox = (Element) el.item(i);
-        Element municipality = (Element) callbox.getElementsByTagName("municipality").item(0);
-        Element district = (Element) callbox.getElementsByTagName("district").item(0);
-        if(parent.equalsIgnoreCase(district.getTextContent())){
-            municipalities.add(municipality.getTextContent());
-        }
-    }
-    ArrayList<String> list = new ArrayList<String>();
-    list.addAll(municipalities);
-    return list;
-   }
-    
-   public ArrayList<String> getParts(String parent) {
-      
-    Set<String> parts = new HashSet<String>();         
-    NodeList el =  this.doc.getElementsByTagName("callbox");      
-    for (int i = 0; i < el.getLength(); i++) {
-        Element callbox = (Element) el.item(i);
-        Element municipality = (Element) callbox.getElementsByTagName("municipality").item(0);
-        Element part = (Element) callbox.getElementsByTagName("part").item(0);
-        if(parent.equalsIgnoreCase(municipality.getTextContent())){
-            parts.add(part.getTextContent());
-        }
-    }
-    ArrayList<String> list = new ArrayList<String>();
-    list.addAll(parts);
-    return list;
-   }
-   
-   public ArrayList<String> getStreets(String parent) {
-      
-    Set<String> streets = new HashSet<String>();         
-    NodeList el =  this.doc.getElementsByTagName("callbox");      
-    for (int i = 0; i < el.getLength(); i++) {
-        Element callbox = (Element) el.item(i);
-        Element street = (Element) callbox.getElementsByTagName("street").item(0);
-        Element part = (Element) callbox.getElementsByTagName("part").item(0);
-        if(parent.equalsIgnoreCase(street.getTextContent())){
-            streets.add(street.getTextContent());
-        }
-    }
-    ArrayList<String> list = new ArrayList<String>();
-    list.addAll(streets);
-    return list;
+    return regions;
    }
    
    public String callboxesByArea(String areaType, String area){
         
-        
         StringBuilder buffer = new StringBuilder();
         
-        NodeList el =  this.doc.getElementsByTagName("callbox");
+        NodeList el =  this.doc.getElementsByTagName(CALLBOX);
         for(int i=0; i<el.getLength(); i++){
             Element callbox = (Element) el.item(i);
             Element searched = (Element) callbox.getElementsByTagName(areaType).item(0);
@@ -167,7 +113,7 @@ public String nearestCallBoxes(String lat, String lng, String diameter){
     double pointLng = Double.parseDouble(lng);
     double pointDiameter = Double.parseDouble(diameter);
     StringBuilder builder = new StringBuilder();
-    NodeList el = this.doc.getElementsByTagName("callbox");
+    NodeList el = this.doc.getElementsByTagName(CALLBOX);
     for (int i = 0; i < el.getLength(); i++){
         Element callBox = (Element) el.item(i);
         double boxLat = Double.parseDouble(callBox.getElementsByTagName("lat").item(0).getTextContent());

@@ -2,6 +2,7 @@ package cz.muni.fi.pb138.callboxesmap;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collection;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -32,7 +33,7 @@ public class AjaxServlet extends HttpServlet {
         buffer.append(areaType);
         buffer.append("'>");
         
-        List<String> options = getOptions(areaType, parent);
+        Collection<String> options = getOptions(areaType, parent);
         System.out.println("options count is:"+options.size());
         for (String option : options) {
             buffer.append("<option>");
@@ -43,18 +44,12 @@ public class AjaxServlet extends HttpServlet {
         return buffer.toString();
     }
 
-    private List<String> getOptions(String areaType, String parent) {
+    private Collection<String> getOptions(String areaType, String parent) {
         if (areaType.equals("region")) {
             return this.callboxes.getRegions();
-        } else if (areaType.equals("district")) {
-            return this.callboxes.getDistricts(parent);
-        } else if (areaType.equals("municipality")) {
-            return this.callboxes.getMunicipalities(parent);
-        } else if (areaType.equals("part")) {
-            return this.callboxes.getParts(parent);
-        } else{
-            return this.callboxes.getStreets(parent);
-        }
+        } else {
+            return this.callboxes.getChildOptions(areaType, parent);
+        } 
     }
 
 }
