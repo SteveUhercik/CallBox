@@ -43,6 +43,7 @@ public class CallboxesXMLClass {
     childParentPairs.put("district", "region");
     childParentPairs.put("municipality", "district");
     childParentPairs.put("part", "municipality");
+    childParentPairs.put("street", "part");
   }
   
   public Collection<String> getChildOptions(String childTag, String parentTextContent) {
@@ -53,6 +54,7 @@ public class CallboxesXMLClass {
         Element callbox = (Element) el.item(i);
         Element child = (Element) callbox.getElementsByTagName(childTag).item(0);
         Element parent = (Element) callbox.getElementsByTagName(parentTag).item(0);
+        System.out.println(parentTextContent + ",  " + parent.getTextContent());
         if(parentTextContent.equalsIgnoreCase(parent.getTextContent())){
             childOptions.add(child.getTextContent());
         }
