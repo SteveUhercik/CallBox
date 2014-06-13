@@ -32,7 +32,7 @@ Java webová aplikace, kde za pomocí Google Maps API budou v mapě zaznačeny t
 
 100% - Doplnění geokódování do XML obsahujícího adresy
  
- 50% - Webová aplikace na zobrazení mapy
+100% - Webová aplikace na zobrazení mapy
 
 4. Členové týmu
 ---------------
