@@ -1,7 +1,9 @@
                     
     var map;
     var markersArray = [];
-    var areaTypes = ['region', 'district', 'municipality', 'part', 'street']
+    var areaTypes = ['region', 'district', 'municipality'];
+    var lastSelectedKey = null;
+    var lastSelectedValue = null;
 
     function removeComboboxesToTheRight(comboBoxId) {
         $.each($("#" + comboBoxId).nextAll(".area-type"), function(index, value) {
@@ -9,25 +11,12 @@
         });
     }
 
-    function createJsonParams() {
-        var json = {}
-        $.each($(".area-type"), function(index, value) {
-            console.log(value);
-            var key = $(value).attr("id");
-            var val = $(value).children(":selected").text();
-            json[key] = val;
-        });
-        return json;
-    }
-
-
     function clearOverlays() {
         for (var i = 0; i < markersArray.length; i++ ) {
           markersArray[i].setMap(null);
         }
         markersArray.length = 0;
     }
-
 
     function createMarkers(gps) {
         for(var i=0;i<gps.length;i++){
@@ -62,8 +51,6 @@
         });
     }
 
-
-
     $(document).ready(function() {
         initializeMap();
         initializeForm();
@@ -75,6 +62,8 @@
             if (areaTypeIndex < areaTypes.length + 1) {
                 areaTypeIndex += 1;
             }
+            lastSelectedKey = currentArea;
+            lastSelectedValue = vybranaHodnota;
             $.ajax({
                 url: 'ajaxservlet',
                 data: {
@@ -90,7 +79,7 @@
         });
 
         $("#submit").click(function() {
-            var params = createJsonParams();
+            var params = {'key' : lastSelectedKey, 'value': lastSelectedValue};
             $.ajax({
                 url: 'markersservlet',
                 data: params,

@@ -6,6 +6,8 @@
   <body>
     <div class="menu">
       <form id="callBoxForm">
+      </form>
+      <form>
         <input type="button" id="submit">
         <a href="index2.jsp" class="pull-right"> Verze 2 </a>
       </form>

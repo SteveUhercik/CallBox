@@ -54,7 +54,6 @@ public class CallboxesXMLClass {
         Element callbox = (Element) el.item(i);
         Element child = (Element) callbox.getElementsByTagName(childTag).item(0);
         Element parent = (Element) callbox.getElementsByTagName(parentTag).item(0);
-        System.out.println(parentTextContent + ",  " + parent.getTextContent());
         if(parentTextContent.equalsIgnoreCase(parent.getTextContent())){
             childOptions.add(child.getTextContent());
         }
@@ -80,24 +79,23 @@ public class CallboxesXMLClass {
         NodeList el =  this.doc.getElementsByTagName(CALLBOX);
         for(int i=0; i<el.getLength(); i++){
             Element callbox = (Element) el.item(i);
-            Element searched = (Element) callbox.getElementsByTagName(areaType).item(0);
-            
-            if(area.equals(searched.getTextContent())){
-                Element location = (Element) searched.getElementsByTagName("location").item(0);
+            NodeList nodeList = callbox.getElementsByTagName(areaType);
+            if (nodeList == null || nodeList.getLength() == 0) {
+              continue;
+            }
+            Element searched = (Element) nodeList.item(0);
+            if(searched.getTextContent() != null && area.equals(searched.getTextContent())){
+                Element location = (Element) callbox.getElementsByTagName("location").item(0);
                 Element latitude = (Element) location.getElementsByTagName("lat").item(0);
                 Element longitude = (Element) location.getElementsByTagName("lng").item(0);
                 buffer.append(Double.parseDouble(latitude.getTextContent()));
                 buffer.append(",");
                 buffer.append(Double.parseDouble(longitude.getTextContent()));
-            
                 if(i!=el.getLength()-1){
                     buffer.append(";");
                 }
             }
         }
-        
-        System.out.println(buffer.toString());
-        
         return buffer.toString();
     }  
    
@@ -124,12 +122,9 @@ public String nearestCallBoxes(String lat, String lng, String diameter){
         double lngMeterDifference = (Math.abs(boxLng - pointLng)) * lngDegree;
         double distance = Math.sqrt(latMeterDifference*latMeterDifference + lngMeterDifference*lngMeterDifference);  
         if (distance <= pointDiameter){
-            System.out.println(distance);
-            System.out.println(callBox.getElementsByTagName("municipality").item(0).getTextContent());
             builder.append(boxLat).append(",").append(boxLng).append(";");
         }
     }
-    System.out.println("out: " + builder.toString());
     return builder.toString();
   }
   

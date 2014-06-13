@@ -18,16 +18,12 @@ public class MarkersServlet extends HttpServlet{
     
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Enumeration parameterNames = req.getParameterNames();
-        while(parameterNames.hasMoreElements()){
-            System.out.println("parameter name:"+parameterNames.nextElement());
-        }
-        
-        String areaType = req.getParameter("area-type");
-        String selected = req.getParameter("selected");
+
+        String key = req.getParameter("key");
+        String value = req.getParameter("value");
         
         resp.setCharacterEncoding(CallboxesXMLClass.CHARACTER_ENCODING);
-        resp.getWriter().append(callboxes.callboxesByArea(areaType, selected));
+        resp.getWriter().append(callboxes.callboxesByArea(key, value));
     }
     
     

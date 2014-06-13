@@ -34,7 +34,6 @@ public class AjaxServlet extends HttpServlet {
         buffer.append("'>");
         
         Collection<String> options = getOptions(areaType, parent);
-        System.out.println("options count is:"+options.size());
         buffer.append("<option>---</option>");
         for (String option : options) {
             buffer.append("<option>");
