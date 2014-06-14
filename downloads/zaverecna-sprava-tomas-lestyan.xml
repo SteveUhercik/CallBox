@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<article lang="sk">
+    <para>Závěrečná správa</para>
+    <sect1>
+        <title/>
+        <sect2>
+            <title>Názov projektu: Mapa telefonních automatů </title>
+        </sect2>
+        <sect2>
+            <title>Člen týmu: Tomáš Lestyan</title>
+            <para/>
+            <para>V následujícom texte uvádzam môj podiel na riešení projektu</para>
+        </sect2>
+    </sect1>
+    <sect1>
+        <title>Spracovanie dokumentu XML s geolokáciou</title>
+        <para>Moja práca na projekte spočívala hlavne na extrahovaní a úprave dát zo súboru XML, ktorý obsahoval zoznam telefónnych automatov na území Českej republiky (bez väčších miest) s ich geolokačnými súradnicami. Moja úloha bola transformovať dáta do takej podoby, aby ich vedelo použiť webové rozhranie aplikácie.</para>
+        <para>Na spracovanie tejto úlohy som použil prevažne jazyk JAVA, čisatočne javascript a HTML</para>
+        <para>Prácu som začal vytvorením triedy, ktorá mala na starosti úplné spracovanie daného XML dokumentu. Táto trieda v konštruktore načíta XML dokument s telefónnymi automatmi doplnený o ich geolokáciu. Následne implementuje metódy, ktore sa strajú o extrahovanie a filtrovanie dát z daného súboru. Na spracovanie som sa rozhodol použiť w3c.org.dom pretože ide o štandard, ktorý je široko využívaný a to nielen v Jazyku JAVA. Tým pádom bude jednoduchší aj prípadný budúci prechod na iný programovací jazyk. Všetky metódy triedy sú prispôsobé XMLSchéme, ktorá validuje spomínaný xml dokument. To ovoľuje budúce rozšírenie aplikácie o nové súbory s telefónnymi automatmi</para>
+    </sect1>
+    <sect1>
+        <title>Nastavenie podpory servletov aplikácie pre triedu, ktorá spracúva XML dokument</title>
+        <para>Mojou ďaľšou úlohov na projekte bolo upravenie servletu, ktorý sa stará o zobrazovanie jednotlivých územných celkov tak, aby sa v ňom zobrazili správne názvy krajov, okresov a miest, podľa XML dokumentu. Toto som vyriešil pomocov triedy, ktorú popisujem v predchádzajúcom bode.</para>
+        <para>S kolegami sme sa pri zobrazovaní územných celkov rozhodli zobrazenie obmedziť na kraje, okresy a mestá. Takto sme postupovali z dôvodu už spomínanej absencie väčších miest. V drtivej väčšine miest, sa tak nachádza maximálne jeen automat. Preto je takmer zbytočné postupovať ďalej na úroveň mestských častí a ulíc</para>
+        <para>Takisto som upravil aj Servlet, ktorý zobrazuje body na mape tak, aby zobrazoval hľadané aautomaty. Čiastočne som upravil aj javascriptový kód, v ktorom som nastavil posielanie dát potrebných k zobrazeniu automatov.</para>
+    </sect1>
+</article>
