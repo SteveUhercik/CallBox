@@ -3,7 +3,6 @@ package cz.muni.fi.pb138.callboxesmap;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collection;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -43,7 +42,13 @@ public class AjaxServlet extends HttpServlet {
         buffer.append("</select>");
         return buffer.toString();
     }
-
+    
+   /**
+   * Returns collection of options in current area type with specific parent
+   * @param areaType area type of options (e.g "municipality")
+   * @param parent value of parent area type (e.g "Brno")
+   * @return 
+   */
     private Collection<String> getOptions(String areaType, String parent) {
         if (areaType.equals("region")) {
             return this.callboxes.getRegions();

@@ -1,7 +1,6 @@
 package cz.muni.fi.pb138.callboxesmap;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -13,15 +12,22 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
- 
+/**
+ * This class is responsible for loading and extracting various data from XML file of callboxes (valid to callboxesWithGeocoding.xsd).
+ * 
+ * @author Tomas Lestyan (tomas.lestyan@gmail.com)
+ */ 
 public class CallboxesXMLClass {
     
   private Document doc;
   private final char separatorChar = File.separatorChar; //system separator
   public static final String CHARACTER_ENCODING = "UTF-8";
-  private Map<String, String> childParentPairs;
+  private final Map<String, String> childParentPairs;
   private static final String CALLBOX = "callbox";
- 
+  
+  /**
+   * Explicit constructor of CallboxesXMLClass. It loads XML file to w3c.org.om.Document 
+   */
   public CallboxesXMLClass() {
     try {
         String parentDir = (new File(CallboxesXMLClass.class.getProtectionDomain().getCodeSource()  //universal relative path
@@ -46,6 +52,12 @@ public class CallboxesXMLClass {
     childParentPairs.put("street", "part");
   }
   
+  /**
+   * Returns all members of arreaType with specific parent
+   * @param childTag area type of child
+   * @param parentTextContent value of parent areaType
+   * @return 
+   */
   public Collection<String> getChildOptions(String childTag, String parentTextContent) {
     Set<String> childOptions = new HashSet<String>();         
     NodeList el =  this.doc.getElementsByTagName(CALLBOX);   
@@ -61,6 +73,10 @@ public class CallboxesXMLClass {
     return childOptions;
   }
   
+   /**
+   * Returns all regions with at least one callbox
+   * @return 
+   */
    public Collection<String> getRegions() {
     Set<String> regions = new HashSet<String>();         
     NodeList el =  this.doc.getElementsByTagName(CALLBOX);      
@@ -72,6 +88,12 @@ public class CallboxesXMLClass {
     return regions;
    }
    
+ /**
+ * Returns locations of all callboxes within specified area type 
+ * @param areaType type of area (e.g "region")
+ * @param area name of area which will be searchet (e.g "Brno")
+ * @return 
+ */
    public String callboxesByArea(String areaType, String area){
         
         StringBuilder buffer = new StringBuilder();
@@ -128,6 +150,10 @@ public String nearestCallBoxes(String lat, String lng, String diameter){
     return builder.toString();
   }
   
+  /**
+  * Returns w3c.org.dom Document which represents xml file of callboxes
+  * @return 
+  */
   public Document getDocument() {
     return doc;
   }
