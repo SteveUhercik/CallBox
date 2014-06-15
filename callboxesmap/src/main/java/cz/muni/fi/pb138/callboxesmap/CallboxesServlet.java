@@ -25,6 +25,7 @@ import org.w3c.dom.Document;
 /**
  *
  * @author Eduard Tomek
+ * @see javax.servlet.http.HttpServlet
  */
 public class CallboxesServlet extends HttpServlet {
     

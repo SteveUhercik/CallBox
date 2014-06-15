@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  *
  * @author Stefan Uhercik (stefan.uhercik@ibacz.eu)
+ * @see javax.servlet.http.HttpServlet
  */
 public class MarkersServlet extends HttpServlet{
 

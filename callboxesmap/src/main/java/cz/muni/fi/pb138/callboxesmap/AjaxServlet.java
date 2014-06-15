@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  *
  * @author Stefan Uhercik (stefan.uhercik@ibacz.eu)
+ * @see javax.servlet.http.HttpServlet
  */
 public class AjaxServlet extends HttpServlet {
     
@@ -25,7 +26,13 @@ public class AjaxServlet extends HttpServlet {
         String selected = req.getParameter("selected");
         writer.append(constructCombobox(areaType, selected));
     }
-
+    
+    /**
+   * Returns a string of code for constructing HTML combobox
+   * @param areaType area type of options (e.g "municipality")
+   * @param parent value of parent area type (e.g "Brno")
+   * @return 
+   */
     private String constructCombobox(String areaType, String parent) {
         StringBuilder buffer = new StringBuilder();
         buffer.append("<select class='area-type' id='");
