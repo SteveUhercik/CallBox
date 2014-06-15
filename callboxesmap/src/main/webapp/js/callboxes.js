@@ -50,6 +50,10 @@
             }
         });
     }
+    
+    function setInfoMessage(text){
+        $("#info-message").text(text);
+    }
 
     $(document).ready(function() {
         initializeMap();
@@ -80,7 +84,7 @@
 
         $("#submit").click(function() {
             var params = {'key' : lastSelectedKey, 'value': lastSelectedValue};
-            $("#error-message").css("display","none");
+            setInfoMessage("");
             $.ajax({
                 url: 'markersservlet',
                 data: params,
@@ -100,17 +104,20 @@
                 'format':$("#formatInput option:selected").val()
             };
             
-           $("#error-message").css("display","none");
+            setInfoMessage("");
+            
             $.ajax({
                 url:'gpsservlet',
                 data:params,
                 success: function(gpsData) {
                     var gps = parseGps(gpsData);
+                    callBoxesCount = gps.length - 1;
+                    setInfoMessage(callBoxesCount + " callboxes found.");
                     clearOverlays();
                     createMarkers(gps);
                 },
                 error:function(a,b,c){
-                    $("#error-message").css("display","block");
+                    setInfoMessage("Missing or ncorrectly enterred data!!!");
                 }
             });
         });

@@ -75,7 +75,7 @@ html, body{
 #gps-locations {
     background-color: #bbbbbb;
     float:left;
-    width:600px;
+    width:500px;
     height:104px;
     padding:3px;
     margin:5px;
@@ -108,7 +108,7 @@ html, body{
 }
 
 table{
-    width:600px;
+    width:500px;
     border-spacing: 0px
 }
 
@@ -118,7 +118,7 @@ table{
     font-size:190%;
 }
 
-#error-message{
+#info-message{
     font-weight: bold;
     color:red;
 }

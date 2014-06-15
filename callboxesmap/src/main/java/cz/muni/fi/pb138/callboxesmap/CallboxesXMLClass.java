@@ -128,22 +128,19 @@ public class CallboxesXMLClass {
  * @param diameter radius in meters (String in decimal format, e.g. "1000.0")
  * @return 
  */
-public String nearestCallBoxes(String lat, String lng, String diameter){
+public String nearestCallBoxes(double lat, double lng, long diameter){
     final double latDegree = 111221.9; //one degree of latitude is 111221.9 meters 
-    final double lngDegree = 71930.5; //one degree of longitude is 71930.5 meters
-    double pointLat = Double.parseDouble(lat);
-    double pointLng = Double.parseDouble(lng);
-    double pointDiameter = Double.parseDouble(diameter);
+    final double lngDegree = 71930.5; //one degree of longitude is 71930.5 meters;
     StringBuilder builder = new StringBuilder();
     NodeList el = this.doc.getElementsByTagName(CALLBOX);
     for (int i = 0; i < el.getLength(); i++){
         Element callBox = (Element) el.item(i);
         double boxLat = Double.parseDouble(callBox.getElementsByTagName("lat").item(0).getTextContent());
         double boxLng = Double.parseDouble(callBox.getElementsByTagName("lng").item(0).getTextContent());
-        double latMeterDifference = (Math.abs(boxLat - pointLat)) * latDegree;
-        double lngMeterDifference = (Math.abs(boxLng - pointLng)) * lngDegree;
+        double latMeterDifference = (Math.abs(boxLat - lat)) * latDegree;
+        double lngMeterDifference = (Math.abs(boxLng - lng)) * lngDegree;
         double distance = Math.sqrt(latMeterDifference*latMeterDifference + lngMeterDifference*lngMeterDifference);  
-        if (distance <= pointDiameter){
+        if (distance <= diameter){
             builder.append(boxLat).append(",").append(boxLng).append(";");
         }
     }
@@ -157,14 +154,6 @@ public String nearestCallBoxes(String lat, String lng, String diameter){
   public Document getDocument() {
     return doc;
   }
-  public static String transformGpsCords(String input){
-      Double degrees = Double.parseDouble(input.substring(0, 2));
-      Double minutes = Double.parseDouble(input.substring(3, 5));
-      Double seconds = Double.parseDouble(input.substring(6));
-      
-      Double result = degrees + minutes/60 + seconds/3600;
-      
-      return result.toString();
-  }
+  
    
 }

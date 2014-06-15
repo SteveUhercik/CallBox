@@ -22,8 +22,8 @@
                             </td>
                             <td>
                                 <select id="formatInput">
-                                    <option value='DD-MM-SS'>DD-MM-SS</option>
                                     <option value='DD.DD'>DD.DD</option>
+                                    <option value='DD-MM-SS'>DD-MM-SS</option>
                                 </select>
                             </td>
                         </tr>
@@ -41,13 +41,15 @@
                             <td>Longitude</td> 
                             <td><input type="text" id="longitudeInput"/></td>
                             <td colspan="2">
-                                <div id="error-message" style="display:none">
-                                    Missing or ncorrectly enterred data!!!
+                                <div id="info-message">
                                 </div>
                             </td> 
                         </tr>
                         <tr>
-                            <td><input type="button" value="Search" id="gpsSubmit"/></td>
+                            <td colspan="2">
+                                <input type="button" value="Search" id="gpsSubmit"/>
+                                <input type="reset" value="Reset"/>
+                            </td>
                         </tr>
                     </table>
                 </form>
