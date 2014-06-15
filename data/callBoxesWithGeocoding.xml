@@ -6547,8 +6547,8 @@
     <part>Březina</part>
     <note>u OÚ</note>
   <location>
-      <lat>49.2820670</lat>
-      <lng>16.7550630</lng>
+      <lat>49.2803418</lat>
+      <lng>16.7365021</lng>
     </location>
   </callbox>
   <callbox vtaid="549410578">
@@ -6558,8 +6558,8 @@
     <part>Březina (dříve okres Tišnov)</part>
     <note>náves</note>
   <location>
-      <lat>49.1950602</lat>
-      <lng>16.6068371</lng>
+      <lat>49.2803418</lat>
+      <lng>16.7365022</lng>
     </location>
   </callbox>
   <callbox vtaid="519424601">
@@ -7920,8 +7920,8 @@
     <part>Vranov</part>
     <note>u TKB</note>
   <location>
-      <lat>49.1950602</lat>
-      <lng>16.6068371</lng>
+      <lat>49.3055411</lat>
+      <lng>16.6211394</lng>
     </location>
   </callbox>
   <callbox vtaid="549424494">
