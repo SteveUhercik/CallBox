@@ -3,7 +3,7 @@
     position: absolute; 
     top: 0px;
     height: 120px;
-    background-color: #dddddd;
+    background-color: #888888;
 }
 
 .pull-right {
@@ -75,7 +75,7 @@ html, body{
 #gps-locations {
     background-color: #bbbbbb;
     float:left;
-    width:239px;
+    width:600px;
     height:104px;
     padding:3px;
     margin:5px;
@@ -96,4 +96,24 @@ html, body{
 
 .gps-input{
     float:left;
+}
+
+#banner{
+    background-color: #bbbbbb;
+    height:104px;
+    width:100px;
+    float:left;
+    padding:3px;
+    margin:5px;
+}
+
+table{
+    width:600px;
+    border-spacing: 0px
+}
+
+#banner{
+    font-family: 'Courier';
+    font-weight: bold;
+    font-size:200%;
 }

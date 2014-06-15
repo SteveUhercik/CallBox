@@ -5,26 +5,44 @@
     <script type="text/javascript" src="js/callboxes.js"></script>
     <body>
         <div class="menu">
-            <div id="gps-locations" method="GET" action="gpsservlet">
+            <div id="banner">
+                CALL-<br>
+                BOXES<br>
+                MAP
+            </div>
+            <div id="gps-locations">
                 <form>
-                    <div>
-                        <div class="form-element">Latitude:</div>
-                        <div class="form-element"><input type="text" id="latitudeInput"/></div>
-                    </div>
-                    <div>
-                        <div class="form-element">Longitude:</div>
-                        <div class="form-element"><input type="text" id="longitudeInput"/></div>                    
-                    </div>
-                    <div>
-                        <div class="form-element">Diameter:</div>
-                        <div class="form-element"><input type="text" id="diameterInput"/></div>                    
-                    </div>
-                    <div>
-                        <div class="form-element"><input type="button" value="Search" id="gpsSubmit"/></div>
-                    </div>
+                    <table>
+                        <tr>
+                            <td colspan="4">
+                                <b>Searching by coordinates</b>
+                                <i>(format DD-MM-SS; D = degrees, M = minutes S = seconds)</i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Latitude</td>
+                            <td><input type="text" id="latitudeInput"/></td> 
+                            <td>Diameter</td>
+                            <td>
+                                <input type="text" id="diameterInput"/>
+                                <span style="width:5px;"/>
+                                metres
+                            </td> 
+                        </tr>
+                        <tr>
+                            <td>Longitude</td> 
+                            <td><input type="text" id="longitudeInput"/></td>
+                            
+                            <td colspan="2" rowspan="2"></td> 
+                        </tr>
+                        <tr>
+                            <td><input type="button" value="Search" id="gpsSubmit"/></td>
+                        </tr>
+                    </table>
                 </form>
             </div>
             <div id="area-selection">
+                <b>Searching by area</b>
                 <form id="callBoxForm">
                 </form>
                 <form>
