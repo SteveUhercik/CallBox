@@ -1,9 +1,3 @@
-/*
- * Basic functionality
- * - show all callboxes - 100%
- * - users current position and zoom - 100%
- * - map - search by address - 100%
- */
 
 $(document).ready(function() {
   initializeMap();
@@ -33,7 +27,6 @@ function initSearchBox() {
       map.fitBounds(bounds);
       map.setZoom(14);
     }
-    //else todo what if place not found?
   });
 
   // Bias the SearchBox results towards places that are within the bounds of the
@@ -60,7 +53,6 @@ function initCheckPosition() {
 function success(data) {
   map.setCenter({lat: data.coords.latitude, lng: data.coords.longitude});
   map.setZoom(14);
-  //todo fill places search box with address
 }
 
 function error(msg) {
