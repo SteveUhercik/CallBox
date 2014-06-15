@@ -157,5 +157,14 @@ public String nearestCallBoxes(String lat, String lng, String diameter){
   public Document getDocument() {
     return doc;
   }
+  public static String transformGpsCords(String input){
+      Double degrees = Double.parseDouble(input.substring(0, 2));
+      Double minutes = Double.parseDouble(input.substring(3, 5));
+      Double seconds = Double.parseDouble(input.substring(6));
+      
+      Double result = degrees + minutes/60 + seconds/3600;
+      
+      return result.toString();
+  }
    
 }
