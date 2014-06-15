@@ -14,15 +14,23 @@
                 <form>
                     <table>
                         <tr>
-                            <td colspan="4">
+                            <td colspan="2">
                                 <b>Searching by coordinates</b>
-                                <i>(format DD-MM-SS; D = degrees, M = minutes S = seconds)</i>
+                            </td>
+                            <td>
+                                Format:
+                            </td>
+                            <td>
+                                <select id="formatInput">
+                                    <option value='DD-MM-SS'>DD-MM-SS</option>
+                                    <option value='DD.DD'>DD.DD</option>
+                                </select>
                             </td>
                         </tr>
                         <tr>
-                            <td>Latitude</td>
+                            <td>Latitude:</td>
                             <td><input type="text" id="latitudeInput"/></td> 
-                            <td>Diameter</td>
+                            <td>Diameter:</td>
                             <td>
                                 <input type="text" id="diameterInput"/>
                                 <span style="width:5px;"/>
@@ -32,8 +40,11 @@
                         <tr>
                             <td>Longitude</td> 
                             <td><input type="text" id="longitudeInput"/></td>
-                            
-                            <td colspan="2" rowspan="2"></td> 
+                            <td colspan="2">
+                                <div id="error-message" style="display:none">
+                                    Missing or ncorrectly enterred data!!!
+                                </div>
+                            </td> 
                         </tr>
                         <tr>
                             <td><input type="button" value="Search" id="gpsSubmit"/></td>

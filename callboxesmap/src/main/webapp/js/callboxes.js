@@ -80,6 +80,7 @@
 
         $("#submit").click(function() {
             var params = {'key' : lastSelectedKey, 'value': lastSelectedValue};
+            $("#error-message").css("display","none");
             $.ajax({
                 url: 'markersservlet',
                 data: params,
@@ -95,10 +96,11 @@
             var params = {
                 'latitude':$("#latitudeInput").val(),
                 'longitude':$("#longitudeInput").val(),
-                'diameter':$("#diameterInput").val()
+                'diameter':$("#diameterInput").val(),
+                'format':$("#formatInput option:selected").val()
             };
             
-            console.log(params);
+           $("#error-message").css("display","none");
             $.ajax({
                 url:'gpsservlet',
                 data:params,
@@ -106,6 +108,9 @@
                     var gps = parseGps(gpsData);
                     clearOverlays();
                     createMarkers(gps);
+                },
+                error:function(a,b,c){
+                    $("#error-message").css("display","block");
                 }
             });
         });
