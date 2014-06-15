@@ -33,7 +33,9 @@ public class AjaxServlet extends HttpServlet {
         buffer.append("'>");
         
         Collection<String> options = getOptions(areaType, parent);
-        buffer.append("<option>---</option>");
+        buffer.append("<option>Select ");
+        buffer.append(areaType);
+        buffer.append("</option>");
         for (String option : options) {
             buffer.append("<option>");
             buffer.append(option);
