@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<article lang="cs">
+  <para>Závěrečná zpráva</para>
+  <sect1>
+    <title/>
+    <sect2>
+      <title>Název projektu: Mapa telefonních automatů </title>
+    </sect2>
+    <sect2>
+      <title>Člen týmu: Adam Krejčí</title>
+      <para/>
+      <para>V následujícím textu uvádím můj podíl na řešení projektu.</para>
+    </sect2>
+  </sect1>
+  <sect1><title>1) Organizační záležitosti</title>
+<para>V začátku projektu jsem se ujal řešení alespoň těch nejnutnějších organizačních záležitostí. Především se jednalo o kontaktování všech řešitelů po zadání projektu, iniciace začátku práce, organizaci fyzických srazů (celkem proběhly dva srazy), komunikaci s vyučujícími, zajištění domluvy na termínu obhajoby, zajištění včasného plnění kontrolních bodů, testování funkčnosti výsledné aplikace a přípravu prezentace pro obhajobu projektu. 
+</para>
+</sect1>
+  <sect1><title>2) Převod csv souboru s daty o automatech do formátu xml</title>
+<para>
+Zdrojem dat pro aplikaci byl csv soubor s hrubými daty o umístění telefonních automatů. Tento soubor bylo třeba převést do formátu xml, aby mohl být data využita pro další zpracování. Nejdříve jsem definoval požadovaný formát výstupních dat pomocí XML Schema. Poté jsem vytvořil program v jazyce Java, který s pomocí Document Object Model ze vstupního souboru ve formátu csv vytvoří validní xml soubor s daty. Program odfiltruje chybné záznamy a do výstupu se tak dostanou pouze kvalitní data. Má jednoduché rozhraní ovládané z příkazové řádky. 
+</para>
+<para>
+Vstupní data nebyla příliš kvalitní. Soubor csv s daty o telefonních automatech je značně nekonsistentní a obsahuje četné chyby. Některé chybné záznamy proto nebyly do výsledného xml souboru zařazeny. Vstupní soubor navíc vůbec neobsahuje data o automatech ve větších městech, ty proto nejsou ve výsledné aplikaci zobrazovány.
+</para>
+</sect1>
+  <sect1><title>Vyhledávání automatů podle souřadnic</title>
+<para>
+Do vývoje webové aplikace jsme se zapojil napsáním funkce, která vyhledá všechny automaty v zadaném okruhu od zadaných souřadnic. Metoda využívá Document Object Model. Pro výpočet vzdálenosti mezi zeměpisnými souřadnicemi jsem použil aproximaci, která převádí zeměpisné stupně na metry. Tato metoda sice není univerzálně použitelná, nicméně pro potřeby území velikosti České Republiky naprosto dostačuje.
+</para>
+</sect1>
+
+</article>
