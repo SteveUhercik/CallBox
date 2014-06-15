@@ -90,6 +90,25 @@
                 }
             });
         });
+        
+        $("#gpsSubmit").click(function(){
+            var params = {
+                'latitude':$("#latitudeInput").val(),
+                'longitude':$("#longitudeInput").val(),
+                'diameter':$("#diameterInput").val()
+            };
+            
+            console.log(params);
+            $.ajax({
+                url:'gpsservlet',
+                data:params,
+                success: function(gpsData) {
+                    var gps = parseGps(gpsData);
+                    clearOverlays();
+                    createMarkers(gps);
+                }
+            });
+        });
 
     });
     
@@ -115,5 +134,5 @@
         }
         );
      
-     
+   
      */

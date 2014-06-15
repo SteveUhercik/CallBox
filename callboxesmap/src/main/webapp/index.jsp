@@ -5,22 +5,22 @@
     <script type="text/javascript" src="js/callboxes.js"></script>
     <body>
         <div class="menu">
-            <div id="gps-locations">
+            <div id="gps-locations" method="GET" action="gpsservlet">
                 <form>
                     <div>
                         <div class="form-element">Latitude:</div>
-                        <div class="form-element"><input type="text"/></div>
+                        <div class="form-element"><input type="text" id="latitudeInput"/></div>
                     </div>
                     <div>
                         <div class="form-element">Longitude:</div>
-                        <div class="form-element"><input type="text"/></div>                    
+                        <div class="form-element"><input type="text" id="longitudeInput"/></div>                    
                     </div>
                     <div>
                         <div class="form-element">Diameter:</div>
-                        <div class="form-element"><input type="text"/></div>                    
+                        <div class="form-element"><input type="text" id="diameterInput"/></div>                    
                     </div>
                     <div>
-                        <div class="form-element"><input type="submit" value="Search"/></div>
+                        <div class="form-element"><input type="button" value="Search" id="gpsSubmit"/></div>
                     </div>
                 </form>
             </div>

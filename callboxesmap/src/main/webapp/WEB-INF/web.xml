@@ -31,6 +31,15 @@
         <servlet-name>callboxesservlet</servlet-name>
         <url-pattern>/callboxesservlet/*</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>gpsservlet</servlet-name>
+        <servlet-class>cz.muni.fi.pb138.callboxesmap.GpsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>gpsservlet</servlet-name>
+        <url-pattern>/gpsservlet/*</url-pattern>
+    </servlet-mapping>
   
   
 </web-app>
