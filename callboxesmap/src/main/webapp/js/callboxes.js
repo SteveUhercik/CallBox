@@ -117,7 +117,7 @@
                     createMarkers(gps);
                 },
                 error:function(a,b,c){
-                    setInfoMessage("Missing or ncorrectly enterred data!!!");
+                    setInfoMessage("Missing or incorrectly enterred data!!!");
                 }
             });
         });
