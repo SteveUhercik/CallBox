@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	
+<article xml:lang="sk" xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xl="http://www.w3.org/1999/xlink">
+  <title>Záverečná správa</title>
+  <section>
+    <title>Názov projektu</title>
+    <para>Mapa telefónnych automatov</para>
+    <section>
+      <title>Člen tímu</title>
+      <para>Štefan Uherčík</para>
+    </section>
+  </section>
+
+  <section>
+    <title>Podiel na riešení projektu:</title>
+     <section>
+        <title>Analýza, návrh, prieskum technológií</title>
+		<para>
+			Mojou úlohou bolo premyslieť štruktúru projektu a nájsť vhodné technológie, pomocou ktorých by tím mohol doviesť projekt do úspešného konca. Jedným zo zásadných rozdodnutí bolo použitie Javasriptového API pre prácu s mapami od spoločnosti Google, čo znamenalo napísať väčšinu funkcionality zabezpečujúcej vykresľovanie frontendu tiež v jazyku Javascript, pričom kód bude využívať ajaxové volania smerované na rôzne servlety pre získanie dát z backendu. Ako buildovací nástroj a nástroj pre vytvorenie štruktúry projektu som sa rozhodol vybrať Maven, vzhľadom k jeho jednoduchej konfigurácii. Ako verzovací nástroj som sa rozhodol vybrať Git - z dôvodu, že väčšina členov tímu tento verzovací nástroj preferuje. Návrh aplikácie bol jednoduchý, cieľom bolo vytvoriť webovú stránku, ktorá na väčšine svojej plochy zobrazuje mapu a popri nej obsahuje filtrovacie nástroje pre zobrazenie automatov podľa špecifických kritérií. Jedným spôsobom vyhľadávania je zužovanie výberu oblasti, v ktorej cheme hľadať a druhým spôsobom je je vyhľadanie podľa súradníc a veľkosti oblasti.
+        </para>
+    </section>
+    <section>
+        <title>Javascript a servlety</title>
+        <para>
+			Z implementačnej stránky som vytvoril kostru javascriptového kódu, ktorý zabezpečuje zobrazovanie combo-boxov, ktoré sú určené na zúženie oblasti výberu a kód ktorý umožní vyhľadať automaty na základe GPS súradníc. Následne som vytvoril triviálne testovacie dáta, ktoré mali simulovať návratové hodnoty volaní funkcií pre získanie reálnych dát. Vytvoril som servlety, ktoré sú určené na spracovanie požiadavkov z volaní javascriptového kódu a ich mapovania v súbore web.xml. Vytvoril som jednoduché štýly a HTML markup, ktoré zabezpečujú vykreslenie formulárov v hornej lište aplikácie.
+		</para>
+    </section>
+  </section>
+</article> 
