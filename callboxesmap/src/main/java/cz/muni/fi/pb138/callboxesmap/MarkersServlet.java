@@ -20,9 +20,12 @@ public class MarkersServlet extends HttpServlet{
 
         String key = req.getParameter("key");
         String value = req.getParameter("value");
+        String parent = req.getParameter("pVal");
+        
+        
         
         resp.setCharacterEncoding(CallboxesXMLClass.CHARACTER_ENCODING);
-        resp.getWriter().append(callboxes.callboxesByArea(key, value));
+        resp.getWriter().append(callboxes.callboxesByArea(key, value, parent));
     }
     
     
