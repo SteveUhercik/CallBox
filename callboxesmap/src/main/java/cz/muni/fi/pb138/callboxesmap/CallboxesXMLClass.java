@@ -89,14 +89,16 @@ public class CallboxesXMLClass {
    }
    
  /**
- * Returns locations of all callboxes within specified area type 
+ * Returns locations of all callboxes within specified area type (+ Filters same named municipalities)
  * @param areaType type of area (e.g "region")
  * @param area name of area which will be searchet (e.g "Brno")
+ * @param parent value of parent area type (e.g "Brno")
  * @return 
  */
-   public String callboxesByArea(String areaType, String area){
+   public String callboxesByArea(String areaType, String area, String parent){
         
         StringBuilder buffer = new StringBuilder();
+        String parentTag = childParentPairs.get(areaType);
         
         NodeList el =  this.doc.getElementsByTagName(CALLBOX);
         for(int i=0; i<el.getLength(); i++){
@@ -106,6 +108,7 @@ public class CallboxesXMLClass {
               continue;
             }
             Element searched = (Element) nodeList.item(0);
+            if(parentTag == null){
             if(searched.getTextContent() != null && area.equals(searched.getTextContent())){
                 Element location = (Element) callbox.getElementsByTagName("location").item(0);
                 Element latitude = (Element) location.getElementsByTagName("lat").item(0);
@@ -116,6 +119,25 @@ public class CallboxesXMLClass {
                 if(i!=el.getLength()-1){
                     buffer.append(";");
                 }
+            }
+            }
+            else{
+                NodeList nodeListParent = callbox.getElementsByTagName(parentTag);
+                if (nodeListParent == null || nodeListParent.getLength() == 0) {
+                    continue;
+                }
+                Element searchedParent = (Element) nodeListParent.item(0);
+                if(searched.getTextContent() != null && area.equals(searched.getTextContent()) && parent.equals(searchedParent.getTextContent())){
+                Element location = (Element) callbox.getElementsByTagName("location").item(0);
+                Element latitude = (Element) location.getElementsByTagName("lat").item(0);
+                Element longitude = (Element) location.getElementsByTagName("lng").item(0);
+                buffer.append(Double.parseDouble(latitude.getTextContent()));
+                buffer.append(",");
+                buffer.append(Double.parseDouble(longitude.getTextContent()));
+                if(i!=el.getLength()-1){
+                    buffer.append(";");
+                }
+            }
             }
         }
         return buffer.toString();

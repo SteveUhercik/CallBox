@@ -4,6 +4,7 @@
     var areaTypes = ['region', 'district', 'municipality'];
     var lastSelectedKey = null;
     var lastSelectedValue = null;
+    var parentValue = null;
 
     function removeComboboxesToTheRight(comboBoxId) {
         $.each($("#" + comboBoxId).nextAll(".area-type"), function(index, value) {
@@ -62,17 +63,21 @@
         $("#callBoxForm").on("change", ".area-type", function(event) {
             var currentArea = $(this).attr("id");
             var vybranaHodnota = $(this).val();
-            areaTypeIndex = areaTypes.indexOf(currentArea);
+            var parentVal = $(this).prev().val();
+            areaTypeIndex = areaTypes.indexOf(currentArea);            
             if (areaTypeIndex < areaTypes.length + 1) {
                 areaTypeIndex += 1;
             }
             lastSelectedKey = currentArea;
             lastSelectedValue = vybranaHodnota;
+            parentValue = parentVal;
+           
             $.ajax({
                 url: 'ajaxservlet',
                 data: {
                     'area-type': areaTypes[areaTypeIndex],
                     'selected' : vybranaHodnota
+                    
                 },
                 success: function(generatedCombobox) {
                     removeComboboxesToTheRight(currentArea);
@@ -83,7 +88,7 @@
         });
 
         $("#submit").click(function() {
-            var params = {'key' : lastSelectedKey, 'value': lastSelectedValue};
+            var params = {'key' : lastSelectedKey, 'value': lastSelectedValue, 'pVal': parentValue};
             setInfoMessage("");
             $.ajax({
                 url: 'markersservlet',
