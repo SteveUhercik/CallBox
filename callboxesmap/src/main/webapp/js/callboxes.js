@@ -127,29 +127,10 @@
             });
         });
 
+        google.maps.event.addListener(map, 'click', function(event){
+          var lat = event.latLng.k;
+          var lng = event.latLng.A;
+          document.getElementById("latitudeInput").value = lat;
+          document.getElementById("longitudeInput").value = lng;
+        });
     });
-    
-    
-    /* GEOCODER EXAMPLE
-     
-     
-     var geocoder = new google.maps.Geocoder();
-        geocoder.geocode(
-                {address: 'Brno'}, function(results, status) {
-
-            if (status == google.maps.GeocoderStatus.OK) {
-                console.log("suradnice brna su");
-                console.log(results);
-                var marker = new google.maps.Marker({
-                    map: map,
-                    position: results[0].geometry.location
-                });
-            }
-            else {
-                console.log("Brno nenajdene");
-            }
-        }
-        );
-     
-   
-     */
