@@ -89,9 +89,10 @@ public class CallboxesXMLClass {
    }
    
  /**
- * Returns locations of all callboxes within specified area type 
+ * Returns locations of all callboxes within specified area type (+ Filters same named municipalities)
  * @param areaType type of area (e.g "region")
  * @param area name of area which will be searchet (e.g "Brno")
+ * @param parent value of parent area type (e.g "Brno")
  * @return 
  */
    public String callboxesByArea(String areaType, String area, String parent){
